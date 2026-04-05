@@ -61,6 +61,11 @@ If you are using the binary, you can run it like this:
 
 ```bash
 ./yass-hat packages.yaml
+
+# Preview what will execute without actually mutating your system
+./yass-hat --dry-run packages.yaml
+# Or use the --plan / -p flag alias
+./yass-hat --plan packages.yaml
 ```
 
 If you are using deno, you can run it like this:
@@ -71,6 +76,9 @@ deno run --allow-read --allow-write --allow-run --allow-env src/main.ts
 
 # Pass a specific path
 deno run --allow-read --allow-write --allow-run --allow-env src/main.ts ./custom_setup.yaml
+
+# Run safely in dry-run mode
+deno run --allow-read --allow-write --allow-run --allow-env src/main.ts --dry-run
 ```
 
 > **Heads Up:** Operations that modify root directories (such as writing to
@@ -120,3 +128,10 @@ Code Debugger side panel, it attaches automatically to `main.ts` while executing
 `packages.yaml`. You can smoothly plant breakpoints down `parser.ts` or
 `runner.ts` and inspect objects line-by-line while parsing your layout
 configuration schema dynamically.
+
+## Security Considerations
+
+> [!CAUTION]
+> **Trust Boundary:** The `scripts.run` configuration values are executed directly using `bash -c`. This is intentional to provide powerful automation flexibility. However, it also means that executing a `packages.yaml` provided by an untrusted source can lead to arbitrary code execution on your environment.
+> 
+> *Always inspect* third-party YAML configurations. Run the tool with the `--dry-run` or `--plan` flag first to safely review every step, command, and file modification before making it a reality.
