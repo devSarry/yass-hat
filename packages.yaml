@@ -1,0 +1,63 @@
+version: 1
+
+# primary dotfiles to append to when installing brew packages
+dotfiles:
+  - ~/.zshrc
+
+repositories:
+  rpm:
+    - id: vscode
+      import_key: https://packages.microsoft.com/keys/microsoft.asc
+      repo_file: /etc/yum.repos.d/vscode.repo
+      content: |
+        [code]
+        name=Visual Studio Code
+        baseurl=https://packages.microsoft.com/yumrepos/vscode
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+
+    - id: hashicorp
+      repo_file: /etc/yum.repos.d/hashicorp.repo
+      content: |
+        [hashicorp]
+        name=HashiCorp Stable - $basearch
+        baseurl=https://rpm.releases.hashicorp.com/fedora/$releasever/$basearch/stable
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://rpm.releases.hashicorp.com/gpg
+        repo_gpgcheck=0
+
+packages:
+  dnf:
+    - htop
+    - rsync
+    - git
+    - unzip
+    - firefox
+    - code
+    - podman
+    - terraform
+    - zsh
+    - mpv
+    - lutris
+
+  flatpak:
+    - com.bitwarden.desktop
+    - org.videolan.VLC
+    - org.qbittorrent.qBittorrent
+    - io.missioncenter.MissionCenter
+
+  homebrew:
+    packages:
+      - name: atuin
+        append_to_dotfile: |
+          eval "$(atuin init zsh --disable-up-arrow)"
+      - name: deno
+        append_to_dotfile: |
+          export DENO_INSTALL="$HOME/.deno"
+          export PATH="$DENO_INSTALL/bin:$PATH"
+      - name: nvm
+        append_to_dotfile: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

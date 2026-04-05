@@ -1,0 +1,9 @@
+version: 1
+
+packages:
+  dnf:
+    - htop
+
+scripts:
+  - name: Hello E2E
+    run: echo "Hello World From Action" > /tmp/hello.txt

@@ -1,0 +1,12 @@
+FROM fedora:latest
+
+RUN dnf install -y sudo jq curl
+
+COPY yass-hat /usr/local/bin/yass-hat
+RUN chmod +x /usr/local/bin/yass-hat
+
+WORKDIR /app
+COPY tests/e2e_packages.yaml /app/packages.yaml
+COPY tests/e2e.sh /app/e2e.sh
+
+CMD ["bash", "/app/e2e.sh"]
