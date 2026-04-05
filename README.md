@@ -1,7 +1,8 @@
-# YAML-Drive Setup
+# yass-hat
 
-A CLI tool designed to completely automate and manage a Fedora Linux workstation
-setup from a simple `packages.yaml` configuration profile.
+**Y**et **A**nother **S**etup **S**cript for automating Fedora Linux workstation configurations, this time using YAML! 
+
+A CLI tool designed to completely automate and manage your setup from a simple `packages.yaml` configuration profile.
 
 It handles adding `.repo` configuration files, managing DNF, Flatpak, and
 Homebrew applications, injecting commands into dotfiles, and executing
