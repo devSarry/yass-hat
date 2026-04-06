@@ -64,8 +64,6 @@ If you are using the binary, you can run it like this:
 
 # Preview what will execute without actually mutating your system
 ./yass-hat --dry-run packages.yaml
-# Or use the --plan / -p flag alias
-./yass-hat --plan packages.yaml
 ```
 
 If you are using deno, you can run it like this:
@@ -87,14 +85,7 @@ deno run --allow-read --allow-write --allow-run --allow-env src/main.ts --dry-ru
 
 ## Development
 
-Running local edits and verifying changes against Deno standard definitions is
-incredibly simple.
-
 ### Building a standalone binary
-
-Deno makes it incredibly easy to compile your CLI tool into a standalone,
-statically-linked executable so you don't even need Deno installed to run it
-later!
 
 You can build your CLI using the provided Deno task:
 

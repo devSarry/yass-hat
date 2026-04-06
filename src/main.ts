@@ -8,11 +8,10 @@ import { Command } from "@cliffy/command";
 if (import.meta.main) {
   const { args, options } = await new Command()
     .name("yass-hat")
-    .version("v1.0.0")
+    .version("v1.1.0")
     .description("Automate and manage your Fedora workstation setup from a YAML profile.")
     .arguments("[file:string]")
     .option("-d, --dry-run", "Preview the changes without actually mutating the system", { default: false })
-    .option("-p, --plan", "Alias for --dry-run", { default: false })
     .parse(Deno.args);
 
   const fileArg = args[0] || "packages.yaml";
