@@ -32,7 +32,7 @@ export interface SetupConfig {
   scripts?: { name: string; run: string }[];
 }
 
-export function parseConfig(yamlContent: string): SetupConfig {
+export const parseConfig = (yamlContent: string): SetupConfig => {
   const parsedConfig: SetupConfig = {};
   if (!yamlContent || yamlContent.trim() === "") {
     return parsedConfig;
@@ -72,4 +72,4 @@ export function parseConfig(yamlContent: string): SetupConfig {
   }
 
   return parsedConfig;
-}
+};

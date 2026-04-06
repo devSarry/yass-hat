@@ -1,6 +1,8 @@
 import { parseConfig } from "./parser.ts";
 import { colors } from "@cliffy/ansi/colors";
-import { setupWorkstation, RealSystemAdapter, DryRunSystemAdapter } from "./runner.ts";
+import { setupWorkstation } from "./runner.ts";
+import { createDryRunSystemAdapter } from "./adapters/DryRunSystemAdapter.ts";
+import { createRealSystemAdapter } from "./adapters/RealSystemAdapter.ts";
 import { Command } from "@cliffy/command";
 
 if (import.meta.main) {
@@ -21,7 +23,7 @@ if (import.meta.main) {
     const config = parseConfig(yamlContent);
     
     // Select the SystemAdapter conditionally
-    const adapter = isDryRun ? new DryRunSystemAdapter() : new RealSystemAdapter();
+    const adapter = isDryRun ? createDryRunSystemAdapter() : createRealSystemAdapter();
     
     if (isDryRun) {
       console.log(colors.bold.yellow("--- Executing in DRY RUN mode. No system mutations will occur. ---"));

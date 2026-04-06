@@ -1,6 +1,6 @@
 FROM fedora:latest
 
-RUN dnf install -y sudo jq curl
+RUN dnf install -y sudo jq curl git procps-ng
 
 COPY yass-hat /usr/local/bin/yass-hat
 RUN chmod +x /usr/local/bin/yass-hat

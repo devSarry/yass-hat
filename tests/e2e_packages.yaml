@@ -3,6 +3,11 @@ version: 1
 packages:
   dnf:
     - htop
+  homebrew:
+    packages:
+      - name: atuin
+        append_to_dotfile: |
+          eval "$(atuin init zsh --disable-up-arrow)"
 
 scripts:
   - name: Hello E2E
