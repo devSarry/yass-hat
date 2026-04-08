@@ -41,6 +41,7 @@ packages:
     - zsh
     - mpv
     - lutris
+    - toshy
 
   flatpak:
     - com.bitwarden.desktop
