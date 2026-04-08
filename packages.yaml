@@ -41,7 +41,6 @@ packages:
     - zsh
     - mpv
     - lutris
-    - toshy
 
   flatpak:
     - com.bitwarden.desktop
@@ -62,3 +61,7 @@ packages:
         append_to_dotfile: |
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+scripts:
+  - name: toshy
+    run: curl -fsSL https://raw.githubusercontent.com/RedBearAK/toshy/main/scripts/toshy-setup.sh | bash
