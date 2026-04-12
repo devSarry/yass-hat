@@ -1,6 +1,7 @@
 {
   "tasks": {
     "dev": "deno run --watch src/main.ts",
+    "test": "deno test --allow-env",
     "build": "deno compile --allow-read --allow-write --allow-run --allow-env --output yass-hat src/main.ts",
     "test:e2e": "deno task build && docker build -f Dockerfile.e2e -t yass-hat-e2e . && docker run --rm yass-hat-e2e",
     "test:shell": "deno task build && docker build -f Dockerfile.e2e -t yass-hat-e2e . && docker run -it --rm yass-hat-e2e bash"
