@@ -15,7 +15,7 @@ if (import.meta.main) {
     .parse(Deno.args);
 
   const fileArg = args[0] || "packages.yaml";
-  const isDryRun = options.dryRun || options.plan;
+  const isDryRun = options.dryRun;
 
   try {
     const yamlContent = await Deno.readTextFile(fileArg);

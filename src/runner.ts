@@ -160,10 +160,32 @@ export const checkPrerequisites = async (config: SetupConfig, sys: SystemAdapter
       const install = await sys.confirm("Would you like to install Homebrew now?");
       if (install) {
         console.log(info("Installing Homebrew..."));
-        await sys.runCommand(["bash", "-c", "NONINTERACTIVE=1 /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""]);
-        console.log(success("Homebrew installed successfully!"));
-      } else {
-        console.log(warn("Skipping Homebrew installation. Brew dependencies may fail."));
+        await runScript({
+          name: "install-homebrew",
+          run: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+                BREW_BIN=/home/linuxbrew/.linuxbrew/bin/brew
+                SHELL_NAME=$(basename "$SHELL")
+                case "$SHELL_NAME" in
+                  zsh)  RC_FILE="$HOME/.zshrc" ;;
+                  fish) RC_FILE="$HOME/.config/fish/config.fish" ;;
+                  *)    RC_FILE="$HOME/.bashrc" ;;
+                esac
+                if ! grep -q "brew shellenv" "$RC_FILE" 2>/dev/null; then
+                  echo >> "$RC_FILE"
+                  if [ "$SHELL_NAME" = "fish" ]; then
+                    echo "$BREW_BIN shellenv fish | source" >> "$RC_FILE"
+                  else
+                    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$RC_FILE"
+                  fi
+                fi
+                eval "$($BREW_BIN shellenv)"
+                sudo dnf group install development-tools -y
+                brew install gcc
+        `
+        }, sys).catch(err => {
+          console.error(warn("Homebrew installation failed. Please install it manually and re-run the setup."));
+          throw err;
+        });
       }
     }
   }
@@ -185,7 +207,7 @@ export const setupWorkstation = async (config: SetupConfig, sys: SystemAdapter):
 
   if (config.packages?.flatpak && config.packages.flatpak.length > 0) {
     console.log(info(`Installing Flatpak packages: ${config.packages.flatpak.join(", ")}`));
-    await sys.runCommand(["flatpak", "install", "-y", "flathub", ...config.packages.flatpak]);
+    await sys.runCommand(["flatpak", "install", "--user", "-y", ...config.packages.flatpak]);
   }
 
   if (config.packages?.homebrew?.packages && config.packages.homebrew.packages.length > 0) {
